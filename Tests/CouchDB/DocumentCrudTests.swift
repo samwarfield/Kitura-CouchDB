@@ -40,7 +40,7 @@ class DocumentCrudTests : XCTestCase {
     var jsonDocument: JSON?
     let dbName = "kitura_db"
 
-    func getDatabaseClient() {
+    func getDatabaseClient() -> CouchDBClient {
         let credentials = Utils.readCredentials()
 
         // Connection properties for testing Cloudant or CouchDB instance
@@ -214,7 +214,7 @@ class DocumentCrudTests : XCTestCase {
         let path = "couch_httpd_auth/allow_persistent_cookies"
 
         checkDatabase(couchDBClient, path: path, nil) { setValue in
-            couchDBClient.setConfig("couch_httpd_auth/allow_persistent_cookies", value: newValue) { (error) in
+            couchDBClient.setConfig("couch_httpd_auth/allow_persistent_cookies", value: "true") { (error) in
                 guard error == nil else {
                     XCTFail("Error in configuring the database --> \(error!.code) \(error!.domain) \(error!.userInfo)")
                     return
