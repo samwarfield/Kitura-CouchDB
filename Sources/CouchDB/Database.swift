@@ -223,7 +223,11 @@ public class Database {
 
     public func queryByView(_ view: String, ofDesign design: String, usingParameters params: [Database.QueryParameters], callback: (JSON?, NSError?) -> ()) {
         var paramString = ""
-        var keys: [Any]?
+        #if os(Linux)
+            var keys: [Any]?
+        #else
+            var keys: [AnyObject]?
+        #endif
 
         for param in params {
             switch param {
